@@ -95,6 +95,9 @@ Use the GitHub Pages link: https://charlesmartinedd.github.io/mpp-interactive-tr
 ## 📊 Training Flow
 
 1. **Welcome Modal** (auto-appears on first visit)
+   - Professional voiceover narration (ElevenLabs "Sarah" voice)
+   - Autoplay with user preference memory
+   - Accessible audio controls (play/pause/mute/seek)
 2. **Guided Tour** (15-20 minutes)
 3. **Explore Hotspots** (5-10 minutes)
 4. **Practice Form** (5 minutes)
@@ -111,6 +114,9 @@ Use the GitHub Pages link: https://charlesmartinedd.github.io/mpp-interactive-tr
 - **SweetAlert2** (11) - Beautiful modals
 - **DOMPurify** (3.0.6) - Input sanitization
 
+### Audio
+- **ElevenLabs** - Professional AI voiceover (embedded as base64)
+
 ### Browser Requirements
 - Chrome 90+, Edge 90+, Firefox 88+, Safari 14+
 - JavaScript enabled
@@ -118,7 +124,7 @@ Use the GitHub Pages link: https://charlesmartinedd.github.io/mpp-interactive-tr
 - 1024px+ width recommended
 
 ### File Size
-- **12.0 MB** (includes all CSS and images as base64)
+- **~13 MB** (includes all CSS, images, and audio as base64)
 - No external dependencies required
 - Works offline
 
@@ -126,7 +132,7 @@ Use the GitHub Pages link: https://charlesmartinedd.github.io/mpp-interactive-tr
 
 ```
 mpp-interactive-training/
-├── index.html              # Complete standalone training (12 MB)
+├── index.html              # Complete standalone training (~13 MB)
 └── README.md              # This file
 ```
 
