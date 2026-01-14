@@ -739,6 +739,9 @@ function createWelcomeAudioPlayer() {
     if (trainingStarted || (driverObj && driverObj.isActive && driverObj.isActive())) {
       return;
     }
+
+    let showPanelAfterWelcome = false;
+
     Swal.fire({
       title: 'Welcome to MPP Training! 🎓',
       html: `
@@ -770,14 +773,24 @@ function createWelcomeAudioPlayer() {
         htmlContainer: 'modal-body-redesign'
       },
       allowOutsideClick: false,
+      preConfirm: () => {
+        showPanelAfterWelcome = true;
+        trainingStarted = true;
+        if (welcomeModalTimeout) clearTimeout(welcomeModalTimeout);
+        setTimeout(() => {
+          if (typeof Swal !== 'undefined') Swal.close();
+        }, 0);
+      },
       didOpen: () => {
         initWelcomeAudio();
       },
       willClose: () => {
         cleanupWelcomeAudio();
       }
-    }).then(() => {
-      showControlPanelWithAnimation(); // Show panel after welcome
+    }).then((result) => {
+      if (result.isConfirmed && showPanelAfterWelcome) {
+        showControlPanelWithAnimation(); // Show panel after welcome
+      }
     });
   }
 
