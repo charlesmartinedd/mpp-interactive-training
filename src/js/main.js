@@ -666,52 +666,68 @@
  */
 function createWelcomeAudioPlayer() {
   return `
-    <div id="welcome-audio-container" 
-         role="region" 
-         aria-label="Welcome message audio player"
-         style="margin: 20px 0; padding: 15px; background-color: #f8f9fa; border-radius: 8px; border: 1px solid #dee2e6;">
-      
-      <audio id="welcome-audio" 
-             preload="auto" 
+    <div id="welcome-audio-container"
+         class="mpp-welcome-audio"
+         role="region"
+         aria-label="Introduction narration">
+
+      <audio id="welcome-audio"
+             preload="auto"
              aria-label="Welcome narration audio">
         <source src="${WELCOME_AUDIO_BASE64}" type="audio/mpeg">
         Your browser does not support the audio element.
       </audio>
-      
-      <div style="display: flex; align-items: center; gap: 12px;">
-        <button id="audio-play-pause" 
-                class="audio-control-btn"
-                aria-label="Play welcome narration"
-                style="padding: 8px 16px; background-color: #243d80; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 6px;">
-          <span id="play-icon" aria-hidden="true">▶</span>
-          <span id="play-text">Play Narration</span>
+
+      <div class="mpp-welcome-audio__row">
+        <button id="audio-play-pause"
+                class="mpp-audio-btn"
+                type="button"
+                aria-label="Play welcome narration">
+          <span class="mpp-audio-btn__icon" aria-hidden="true">
+            <svg class="icon-play" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" focusable="false" aria-hidden="true">
+              <path d="M8 5v14l11-7z"></path>
+            </svg>
+            <svg class="icon-pause" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" focusable="false" aria-hidden="true">
+              <path d="M6 5h4v14H6zm8 0h4v14h-4z"></path>
+            </svg>
+          </span>
+          <span id="play-text">Play narration</span>
         </button>
-        
-        <button id="audio-mute" 
-                class="audio-control-btn"
+
+        <button id="audio-mute"
+                class="mpp-audio-mute"
+                type="button"
                 aria-label="Mute audio"
-                aria-pressed="false"
-                style="padding: 8px 12px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
-          <span id="mute-icon" aria-hidden="true">🔊</span>
+                aria-pressed="false">
+          <span class="mpp-audio-btn__icon" aria-hidden="true">
+            <svg class="icon-volume" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" focusable="false" aria-hidden="true">
+              <path d="M3 10v4h4l5 5V5L7 10H3z"></path>
+              <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"></path>
+            </svg>
+            <svg class="icon-muted" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" focusable="false" aria-hidden="true">
+              <path d="M3 10v4h4l5 5V5L7 10H3z"></path>
+              <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.2l2.5 2.5V12zM14 14.83v2.2c.8-.4 1.48-1.02 1.95-1.78L14 14.83z"></path>
+              <path d="M19 9l-1.41-1.41L15 10.17l-2.59-2.58L11 9l2.59 2.59L11 14.17 12.41 15.6 15 13l2.59 2.59L19 14.17l-2.59-2.58L19 9z"></path>
+            </svg>
+          </span>
         </button>
-        
-        <div style="flex: 1; display: flex; align-items: center; gap: 8px;">
-          <span id="audio-time-current" style="font-size: 13px; color: #495057; font-family: monospace;">0:00</span>
-          <div style="flex: 1; height: 6px; background-color: #dee2e6; border-radius: 3px; position: relative; cursor: pointer;" 
-               id="audio-progress-bar"
-               role="progressbar"
-               aria-label="Audio playback progress"
-               aria-valuemin="0"
-               aria-valuemax="100"
-               aria-valuenow="0">
-            <div id="audio-progress-fill" 
-                 style="height: 100%; background-color: #243d80; border-radius: 3px; width: 0%; transition: width 0.1s;"></div>
-          </div>
-          <span id="audio-time-duration" style="font-size: 13px; color: #495057; font-family: monospace;">0:00</span>
-        </div>
       </div>
-      
-      <div style="margin-top: 8px; font-size: 12px; color: #6c757d;">
+
+      <div class="audio-timeline">
+        <span id="audio-time-current" class="time">0:00</span>
+        <div class="progress-track"
+             id="audio-progress-bar"
+             role="progressbar"
+             aria-label="Audio playback progress"
+             aria-valuemin="0"
+             aria-valuemax="100"
+             aria-valuenow="0">
+          <div id="audio-progress-fill" class="progress-fill"></div>
+        </div>
+        <span id="audio-time-duration" class="time">0:00</span>
+      </div>
+
+      <div class="mpp-welcome-audio__status">
         <span id="audio-status" role="status" aria-live="polite">Audio ready to play</span>
       </div>
     </div>
@@ -726,8 +742,6 @@ function createWelcomeAudioPlayer() {
     Swal.fire({
       title: 'Welcome to MPP Training! 🎓',
       html: `
-        ${createWelcomeAudioPlayer()}
-
         <p style="font-size: 16px; line-height: 1.6; margin-top: 15px;">
           This interactive training will help you learn to navigate the Mentor-Protégé Program portal.
         </p>
@@ -742,11 +756,19 @@ function createWelcomeAudioPlayer() {
         <p style="font-size: 14px; color: #666;">
           <strong>Estimated time:</strong> 15-20 minutes<br>
           <strong>Accessibility:</strong> Fully keyboard navigable
-        </p>`,
+        </p>
+
+        ${createWelcomeAudioPlayer()}
+      `,
       icon: 'info',
       confirmButtonText: 'Start Training',
       confirmButtonColor: '#243d80',
       width: '700px',
+      customClass: {
+        popup: 'mpp-modal-outline',
+        title: 'modal-title-redesign',
+        htmlContainer: 'modal-body-redesign'
+      },
       allowOutsideClick: false,
       didOpen: () => {
         initWelcomeAudio();
@@ -771,9 +793,7 @@ function initWelcomeAudio() {
   const currentTimeEl = document.getElementById('audio-time-current');
   const durationEl = document.getElementById('audio-time-duration');
   const statusEl = document.getElementById('audio-status');
-  const playIcon = document.getElementById('play-icon');
   const playText = document.getElementById('play-text');
-  const muteIcon = document.getElementById('mute-icon');
 
   if (!audio) return;
 
@@ -782,7 +802,7 @@ function initWelcomeAudio() {
   if (audioMuted) {
     audio.muted = true;
     muteBtn.setAttribute('aria-pressed', 'true');
-    muteIcon.textContent = '🔇';
+    muteBtn.classList.add('is-muted');
   }
 
   // Format time helper (seconds to MM:SS)
@@ -806,7 +826,7 @@ function initWelcomeAudio() {
     if (audio.paused) {
       audio.play()
         .then(() => {
-          playIcon.textContent = '⏸';
+          playPauseBtn.classList.add('is-playing');
           playText.textContent = 'Pause';
           playPauseBtn.setAttribute('aria-label', 'Pause welcome narration');
           statusEl.textContent = 'Playing narration';
@@ -817,8 +837,8 @@ function initWelcomeAudio() {
         });
     } else {
       audio.pause();
-      playIcon.textContent = '▶';
-      playText.textContent = 'Play Narration';
+      playPauseBtn.classList.remove('is-playing');
+      playText.textContent = 'Play narration';
       playPauseBtn.setAttribute('aria-label', 'Play welcome narration');
       statusEl.textContent = 'Paused';
     }
@@ -827,7 +847,7 @@ function initWelcomeAudio() {
   // Mute toggle
   muteBtn.addEventListener('click', () => {
     audio.muted = !audio.muted;
-    muteIcon.textContent = audio.muted ? '🔇' : '🔊';
+    muteBtn.classList.toggle('is-muted', audio.muted);
     muteBtn.setAttribute('aria-label', audio.muted ? 'Unmute audio' : 'Mute audio');
     muteBtn.setAttribute('aria-pressed', audio.muted.toString());
 
@@ -853,8 +873,8 @@ function initWelcomeAudio() {
   audio.addEventListener('timeupdate', updateProgress);
 
   audio.addEventListener('ended', () => {
-    playIcon.textContent = '▶';
-    playText.textContent = 'Play Narration';
+    playPauseBtn.classList.remove('is-playing');
+    playText.textContent = 'Play narration';
     playPauseBtn.setAttribute('aria-label', 'Play welcome narration');
     statusEl.textContent = 'Audio finished';
     progressFill.style.width = '0%';
@@ -875,7 +895,7 @@ function initWelcomeAudio() {
     setTimeout(() => {
       audio.play()
         .then(() => {
-          playIcon.textContent = '⏸';
+          playPauseBtn.classList.add('is-playing');
           playText.textContent = 'Pause';
           playPauseBtn.setAttribute('aria-label', 'Pause welcome narration');
           statusEl.textContent = 'Playing narration';
