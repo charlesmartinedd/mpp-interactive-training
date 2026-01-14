@@ -1,0 +1,24 @@
+/* Training UI Styles - Base Components */
+/* Progress bar at top of page */
+
+#training-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  z-index: 10000;
+}
+
+#training-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #FFE45F 0%, #FF4B52 100%);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+/* === DARKER PROTÉGÉ SECTION === */
+section.bg-linearBlue500 > div:last-child {
+  background: linear-gradient(135deg, rgba(36, 61, 128, 0.95) 0%, rgba(20, 40, 80, 0.98) 100%) !important;
+}

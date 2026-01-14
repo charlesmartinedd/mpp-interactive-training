@@ -1,0 +1,35 @@
+/* Interactive Hotspots */
+/* Pulsing markers that reveal information when clicked */
+
+.training-hotspot {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background: #FFE45F;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 100;
+  animation: pulse 2s infinite;
+  box-shadow: 0 0 0 0 rgba(255, 228, 95, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #14142B;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 228, 95, 0.7);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 10px rgba(255, 228, 95, 0);
+  }
+}
+
+.training-hotspot:hover {
+  background: #FF4B52;
+  animation: none;
+}

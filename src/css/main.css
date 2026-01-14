@@ -1,0 +1,8 @@
+/* MPP Interactive Training - Main Styles */
+/* Modular CSS architecture for maintainability */
+
+@import url('base.css');
+@import url('training-controls.css');
+@import url('tour.css');
+@import url('hotspots.css');
+@import url('modals.css');
