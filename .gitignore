@@ -1,0 +1,25 @@
+# Build outputs
+dist/
+
+# Development
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+temp/
+
+# OS
+.DS_Store
+desktop.ini
+
+# Keep base64 text files out of LFS
+!*.txt
