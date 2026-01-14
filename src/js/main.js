@@ -52,6 +52,7 @@
   window.hidePanel = function() {
     const panel = document.getElementById('training-controls');
     const showBtn = document.getElementById('show-training-btn');
+    panel.classList.remove('panel-visible');
     panel.classList.add('hidden');
     showBtn.classList.add('visible');
   };
@@ -60,6 +61,7 @@
     const panel = document.getElementById('training-controls');
     const showBtn = document.getElementById('show-training-btn');
     panel.classList.remove('hidden');
+    panel.classList.add('panel-visible');
     showBtn.classList.remove('visible');
   };
 
@@ -779,7 +781,9 @@ function createWelcomeAudioPlayer() {
         if (welcomeModalTimeout) clearTimeout(welcomeModalTimeout);
         setTimeout(() => {
           if (typeof Swal !== 'undefined') Swal.close();
+          showControlPanelWithAnimation();
         }, 0);
+        return true;
       },
       didOpen: () => {
         initWelcomeAudio();
@@ -1050,6 +1054,7 @@ function showControlPanelWithAnimation() {
   if (!panel) return;
 
   setTimeout(() => {
+    panel.classList.remove('hidden');
     panel.classList.add('panel-visible');
     // Start button explanation audio after panel slides in
     setTimeout(() => ButtonExplanationAudio.play(), 500);
