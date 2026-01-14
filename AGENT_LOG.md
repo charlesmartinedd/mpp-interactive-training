@@ -19,3 +19,12 @@
 **Status**: ✅ Pushed
 
 ---
+### 2026-01-14 15:12:39 — Codex (GPT)
+**Task**: Fix welcome modal not closing on Start Training
+**Changes**:
+- Added preConfirm + guarded .then() so clicking "Start Training" reliably closes the modal, marks training started, and shows the control panel.
+
+**Commit**: ix: close welcome modal on start
+**Status**: ✅ Pushed
+
+---
