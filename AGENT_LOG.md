@@ -28,3 +28,13 @@
 **Status**: ✅ Pushed
 
 ---
+### 2026-01-14 15:26:35 — Codex (GPT)
+**Task**: Hide control panel until Start Training
+**Changes**:
+- Hid the 4-button control panel by default and revealed it only after confirming the welcome modal.
+- Forced the welcome modal to close on confirm to avoid it lingering.
+
+**Commit**: ix: show panel after welcome start
+**Status**: ✅ Pushed
+
+---
