@@ -10,3 +10,12 @@
 
 ---
 
+### 2026-01-14 15:01:16 — Codex (GPT)
+**Task**: Apply redesigned modal styling to welcome modal
+**Changes**:
+- Updated welcome modal to use the gold outline popup class (matches redesigned modal style).
+
+**Commit**: style: apply gold outline to welcome modal
+**Status**: ✅ Pushed
+
+---
