@@ -765,7 +765,7 @@ function createWelcomeAudioPlayer() {
       confirmButtonColor: '#243d80',
       width: '700px',
       customClass: {
-        popup: 'mpp-modal-outline',
+        popup: 'modal-gold-border',
         title: 'modal-title-redesign',
         htmlContainer: 'modal-body-redesign'
       },
