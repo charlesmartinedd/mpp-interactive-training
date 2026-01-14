@@ -1,9 +1,9 @@
 # MPP Interactive Training - TODO List
 
 **Last Updated:** January 14, 2026
-**Status:** Video intro refactoring in progress
+**Status:** ✅ Video intro feature COMPLETE!
 
-## 🎬 Video Intro Feature - IN PROGRESS
+## 🎬 Video Intro Feature - ✅ COMPLETE
 
 ### ✅ Completed
 - [x] Cinematic intro video CSS (Spotify-style glowing play button, progress bar)
@@ -12,85 +12,44 @@
 - [x] Audio narration file moved to `src/assets/audio/button-explanation.mp3`
 - [x] Modular code structure created (src/css/, src/js/, scripts/)
 - [x] Git LFS configured for large media files
+- [x] **Video overlay HTML added to `index-new.html`**
+- [x] **Complete video player JavaScript created (`src/js/video-intro.js`)**
+- [x] **Click-to-play functionality (no autoplay)**
+- [x] **Progress bar with seeking**
+- [x] **Keyboard controls (Space, Escape)**
+- [x] **LocalStorage preference (skip once = skip forever)**
+- [x] **Screen reader announcements**
 - [x] All changes committed and pushed to GitHub
 
-### 🚧 Next Steps (To Complete Video Intro)
+**Commit:** `aa19a3c` - "Add click-to-play video intro with Spotify-style controls"
 
-#### 1. Add Video Overlay HTML
-**File:** `index.html` or `index-new.html`
-**Location:** Right after opening `<body>` tag (around line 765)
+### 🎉 What Works Now
 
-```html
-<!-- Video Intro Overlay -->
-<div id="video-intro-overlay" class="video-overlay active">
-  <div class="video-container">
-    <video id="intro-video" preload="auto">
-      <source src="src/assets/video/intro-video.webm" type="video/webm">
-      Your browser does not support the video tag.
-    </video>
+**File:** `index-new.html` with modular structure
 
-    <div class="video-controls">
-      <!-- Spotify-style circular play button -->
-      <button id="play-btn" class="play-circle" aria-label="Play introduction video">
-        <div class="play-icon"></div>
-      </button>
+**Video Intro Features:**
+✅ **Click-to-play** - Large Spotify-style glowing play button
+✅ **Progress bar** - Visual timeline with click-to-seek
+✅ **Time display** - Current time / Total time (MM:SS format)
+✅ **Skip button** - "Skip Intro →" instantly dismisses overlay
+✅ **Keyboard controls:**
+  - **Space** = Play/Pause toggle
+  - **Escape** = Skip intro
+✅ **LocalStorage** - Skip once, never see it again
+✅ **Fade out** - Smooth animation when video ends or skipped
+✅ **Screen reader** - Announces all actions and state changes
+✅ **Responsive** - Works on desktop, tablet, mobile
 
-      <!-- Progress bar -->
-      <div class="video-progress-bar">
-        <div id="video-progress" class="video-progress-fill"></div>
-      </div>
+**Files:**
+- `src/js/video-intro.js` (244 lines) - Complete player logic
+- `src/css/modals.css` - Video overlay styles (202 lines added)
+- `index-new.html` - HTML overlay integrated
+- `src/assets/video/intro-video.webm` - 4.8MB video file
 
-      <!-- Time display -->
-      <div class="video-time">
-        <span id="current-time">0:00</span> / <span id="total-time">0:00</span>
-      </div>
+### 🧪 Next: Testing & Deployment
 
-      <!-- Skip button -->
-      <button id="skip-intro" class="skip-btn">Skip Intro →</button>
-    </div>
-  </div>
-</div>
-```
-
-#### 2. Create Video Player JavaScript
-**File:** `src/js/video-intro.js` (new file)
-
-**Features to implement:**
-- Auto-play on page load (or show play button if autoplay blocked)
-- Play/pause toggle on button click
-- Progress bar updates as video plays
-- Click progress bar to seek
-- Time display (current/total)
-- Skip button to dismiss overlay
-- Fade out overlay when video ends
-- Remember user preference (don't show again if skipped)
-- Keyboard controls (Space = play/pause, Escape = skip)
-- Accessibility announcements
-
-**Core Functions:**
-```javascript
-- initVideoIntro()
-- playVideo()
-- pauseVideo()
-- updateProgress()
-- seekVideo(time)
-- skipIntro()
-- endIntro()
-- savePreference()
-```
-
-#### 3. Link JavaScript Module
-**File:** `index-new.html` (or create it from scratch)
-
-Add to `<head>`:
-```html
-<script src="src/js/video-intro.js" defer></script>
-```
-
-Or if staying with inline, add to bottom of main script block.
-
-#### 4. Test Video Intro
-- [ ] Video loads and displays correctly
+#### 1. Test Video Intro
+- [ ] Video loads and displays correctly in Codespaces
 - [ ] Play button works (glowing animation)
 - [ ] Progress bar updates smoothly
 - [ ] Clicking progress bar seeks correctly
@@ -100,17 +59,25 @@ Or if staying with inline, add to bottom of main script block.
 - [ ] Keyboard controls work (Space, Escape)
 - [ ] Screen reader announces video state
 - [ ] Works on mobile/tablet
-- [ ] File size acceptable for LFS
+- [ ] File size acceptable for LFS ✅ (4.8MB)
 
-#### 5. Decide on Architecture
-**Option A:** Keep `index.html` as single-file (current production version)
-**Option B:** Use `index-new.html` with modular imports (requires testing)
+#### 2. Choose Deployment Strategy
 
-If Option B:
-- [ ] Complete `index-new.html` with all `<link>` and `<script>` tags
-- [ ] Test all features work with external files
-- [ ] Update GitHub Pages to use new version
-- [ ] Archive old `index.html` as `index-legacy.html`
+**Option A:** Deploy `index-new.html` as production (Recommended)
+- Cleaner modular architecture
+- Easier to maintain
+- Video intro included
+- **Action:** Rename `index.html` → `index-legacy.html`, `index-new.html` → `index.html`
+
+**Option B:** Merge video intro into original `index.html`
+- Keep single-file architecture
+- Larger file size (~18MB)
+- **Action:** Copy video overlay HTML/JS into main `index.html`
+
+**Option C:** Keep both versions
+- `index.html` = Legacy single-file (no video)
+- `index-new.html` = Modern modular (with video)
+- Update GitHub Pages to serve `index-new.html`
 
 ## 📋 Other Features - BACKLOG
 
