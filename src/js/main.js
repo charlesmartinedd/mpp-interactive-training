@@ -744,6 +744,22 @@ function createWelcomeAudioPlayer() {
 
     let showPanelAfterWelcome = false;
 
+    const finishWelcomeFlow = () => {
+      if (showPanelAfterWelcome) return;
+      showPanelAfterWelcome = true;
+
+      trainingStarted = true;
+      if (welcomeModalTimeout) clearTimeout(welcomeModalTimeout);
+
+      try {
+        if (typeof Swal !== 'undefined') Swal.close();
+      } catch (e) {
+        // ignore
+      }
+
+      showControlPanelWithAnimation();
+    };
+
     Swal.fire({
       title: 'Welcome to MPP Training! 🎓',
       html: `
@@ -776,24 +792,23 @@ function createWelcomeAudioPlayer() {
       },
       allowOutsideClick: false,
       preConfirm: () => {
-        showPanelAfterWelcome = true;
-        trainingStarted = true;
-        if (welcomeModalTimeout) clearTimeout(welcomeModalTimeout);
-        setTimeout(() => {
-          if (typeof Swal !== 'undefined') Swal.close();
-          showControlPanelWithAnimation();
-        }, 0);
+        finishWelcomeFlow();
         return true;
       },
       didOpen: () => {
         initWelcomeAudio();
+        // Fallback: explicitly close on confirm click (some environments/cache states can prevent close)
+        try {
+          const confirmBtn = typeof Swal !== 'undefined' && Swal.getConfirmButton ? Swal.getConfirmButton() : null;
+          if (confirmBtn) {
+            confirmBtn.addEventListener('click', () => finishWelcomeFlow(), { capture: true, once: true });
+          }
+        } catch (e) {
+          // ignore
+        }
       },
       willClose: () => {
         cleanupWelcomeAudio();
-      }
-    }).then((result) => {
-      if (result.isConfirmed && showPanelAfterWelcome) {
-        showControlPanelWithAnimation(); // Show panel after welcome
       }
     });
   }
@@ -1053,9 +1068,87 @@ function showControlPanelWithAnimation() {
   const panel = document.getElementById('training-controls');
   if (!panel) return;
 
+  // Create dark overlay
+  const overlay = document.createElement('div');
+  overlay.id = 'training-intro-overlay';
+  overlay.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  `;
+
+  // Create container for panel in center
+  const centerContainer = document.createElement('div');
+  centerContainer.style.cssText = `
+    position: relative;
+    z-index: 9999;
+  `;
+
+  document.body.appendChild(overlay);
+
   setTimeout(() => {
+    // Move panel to center container temporarily
+    const panel = document.getElementById('training-controls');
+    const originalParent = panel.parentElement;
+    const originalNextSibling = panel.nextSibling;
+
+    // Store original position info
+    panel.dataset.originalParent = 'body';
+
+    // Style panel for center display
+    panel.style.position = 'relative';
+    panel.style.right = 'auto';
+    panel.style.top = 'auto';
+    panel.style.transform = 'none';
+
+    centerContainer.appendChild(panel);
+    overlay.appendChild(centerContainer);
+
     panel.classList.remove('hidden');
     panel.classList.add('panel-visible');
+
+    // Add dismiss button
+    const dismissBtn = document.createElement('button');
+    dismissBtn.textContent = 'Got it! Start Training';
+    dismissBtn.style.cssText = `
+      margin-top: 20px;
+      padding: 12px 24px;
+      background: #FFD700;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+    `;
+    dismissBtn.onmouseover = () => dismissBtn.style.background = '#FFC700';
+    dismissBtn.onmouseout = () => dismissBtn.style.background = '#FFD700';
+    dismissBtn.onclick = () => {
+      // Remove overlay
+      overlay.remove();
+
+      // Move panel back to original position
+      panel.style.position = '';
+      panel.style.right = '';
+      panel.style.top = '';
+      panel.style.transform = '';
+
+      // Move back to body
+      document.body.appendChild(panel);
+
+      ButtonExplanationAudio.stop();
+    };
+
+    centerContainer.appendChild(dismissBtn);
+
     // Start button explanation audio after panel slides in
     setTimeout(() => ButtonExplanationAudio.play(), 500);
   }, 300);
