@@ -38,3 +38,13 @@
 **Status**: ✅ Pushed
 
 ---
+### 2026-01-14 16:02:27 — Codex (GPT)
+**Task**: Fix welcome modal not closing
+**Changes**:
+- Added an explicit inishWelcomeFlow() to force-close the SweetAlert welcome modal and reveal the 4-button control panel.
+- Added a confirm-button click fallback handler to cover cases where SweetAlert confirm doesn’t close reliably.
+
+**Commit**: ix: ensure welcome modal closes
+**Status**: ✅ Pushed
+
+---
